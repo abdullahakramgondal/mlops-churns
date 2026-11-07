@@ -7,8 +7,8 @@ data:
 
 train:
   model: random_forest        # random_forest | logistic_regression
-  n_estimators: 200
-  max_depth: 8
+  n_estimators: 300
+  max_depth: 10
   min_samples_leaf: 5
   C: 1.0                       # only used by logistic_regression
   random_state: 42
