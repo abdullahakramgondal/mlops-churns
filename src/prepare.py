@@ -11,22 +11,17 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     """Return a cleaned copy of the raw churn table."""
     df = df.copy()
 
-    # TODO S1.1: Remove exact duplicate rows.
-    # Hint: pandas has a one-line method for this.
-    pass
+    # S1.1: remove duplicate rows
+    df = df.drop_duplicates()
 
-    # TODO S1.2: 'TotalCharges' is stored as text and has blank strings (" ").
-    # Convert it to numbers; blanks should become NaN.
-    # Hint: pd.to_numeric(..., errors="coerce")
-    pass
+    # S1.2: TotalCharges text -> number, blanks become NaN
+    df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
 
-    # TODO S1.3: Drop rows where TotalCharges is missing.
-    # Hint: df.dropna(subset=[...])
-    pass
+    # S1.3: drop rows where TotalCharges is missing
+    df = df.dropna(subset=["TotalCharges"])
 
-    # TODO S1.4: Convert the target 'Churn' from "Yes"/"No" to 1/0.
-    # Hint: df[TARGET].map({...})
-    pass
+    # S1.4: Churn Yes/No -> 1/0
+    df[TARGET] = df[TARGET].map({"Yes": 1, "No": 0})
 
     # Keep only the columns the model uses (customerID etc. are dropped).
     return df[FEATURES + [TARGET]]
