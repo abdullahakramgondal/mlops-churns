@@ -21,16 +21,23 @@ stages:
     outs:
       - data/processed
 
-  # TODO S1.10: Complete the 'train' stage.
-  #   cmd:    python -m src.train
-  #   deps:   src/train.py, src/model.py, data/processed
-  #   params: the whole 'train' section (just write: - train)
-  #   outs:   models/model.joblib
-  # train:
+  train:
+    cmd: python -m src.train
+    deps:
+      - src/train.py
+      - src/model.py
+      - data/processed
+    params:
+      - train
+    outs:
+      - models/model.joblib
 
-  # TODO S1.11: Complete the 'evaluate' stage.
-  #   cmd:  python -m src.evaluate
-  #   deps: src/evaluate.py, models/model.joblib, data/processed
-  #   metrics: reports/metrics.json  with  cache: false
-  #   (see the example in the Lab 1 sheet)
-  # evaluate:
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+      - src/evaluate.py
+      - models/model.joblib
+      - data/processed
+    metrics:
+      - reports/metrics.json:
+          cache: false
