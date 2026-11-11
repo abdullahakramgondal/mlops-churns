@@ -1,16 +1,15 @@
-# Image that serves the churn API. Same image is used for Hugging Face and Azure.
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# TODO S2.6: Copy requirements-serving.txt and install it with pip.
-# Hint: COPY <file> .   then   RUN pip install --no-cache-dir -r <file>
-# COPY ... and RUN pip install ...
+# S2.6: install serving requirements first (Docker caches this slow step)
+COPY requirements-serving.txt .
+RUN pip install --no-cache-dir -r requirements-serving.txt
 
-# TODO S2.7: Copy the api/ folder and the models/ folder into the image.
-# COPY api/ ... and COPY models/ ...
+# S2.7: copy only the API code and the trained model
+COPY api/ ./api/
+COPY models/ ./models/
 
-# Hugging Face expects port 7860. Azure will be told to use the same port.
 ENV PORT=7860
 EXPOSE 7860
 
