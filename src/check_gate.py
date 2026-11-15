@@ -14,10 +14,11 @@ def main():
     with open(METRICS_PATH) as f:
         f1 = json.load(f)["f1"]
 
-    # TODO S3.1: If f1 is below min_f1, print a FAIL message and exit with code 1.
-    # Otherwise print a PASS message.
-    # Hint: sys.exit(1)
-    pass
+    # S3.1: fail the build if f1 is below the threshold
+    if f1 < min_f1:
+        print(f"QUALITY GATE FAILED: f1={f1} < min_f1={min_f1}")
+        sys.exit(1)
+    print(f"QUALITY GATE PASSED: f1={f1} >= min_f1={min_f1}")
 
 
 if __name__ == "__main__":
